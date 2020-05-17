@@ -1,0 +1,16 @@
+az login
+
+az account show
+
+az account list --all --output table
+
+az account set --subscription "MSDN Platforms"
+
+# Create a resource group.
+az group create --name myResourceGroup --location westeurope
+
+# Create a virtual machine. 
+az vm create --resource-group myResourceGroup --name myVM --image win2016datacenter --admin-username azureuser --admin-password P@ssw0rd1234!!
+
+#Clean Up
+az group delete --name myResourceGroup --yes

@@ -1,0 +1,31 @@
+az login
+
+az account show
+
+az account list --all --output table
+
+az account set --subscription "MSDN Platforms"
+
+# Create a resource group.
+az group create --name twrg10 --location westeurope
+
+# Create a virtual network.
+az network vnet create --resource-group twrg10 --name myVnet --subnet-name mySubnet
+
+# Create a public IP address.
+az network public-ip create --resource-group twrg10 --name myPublicIP
+
+# Create a network security group.
+az network nsg create --resource-group twrg10 --name myNetworkSecurityGroup
+
+# Create a virtual network card and associate with public IP address and NSG.
+az network nic create --resource-group twrg10 --name myNic --vnet-name myVnet --subnet mySubnet --network-security-group myNetworkSecurityGroup --public-ip-address myPublicIP
+
+# Create a virtual machine. 
+az vm create --resource-group twrg10 --name myVM --location westeurope --nics myNic --image win2016datacenter --admin-username azureuser --admin-password P@ssw0rd1234!!
+
+# Open port 3389 to allow RDP traffic to host.
+az vm open-port --port 3389 --resource-group twrg10 --name myVM
+
+#Clean Up
+az group delete --name twrg10 --yes
