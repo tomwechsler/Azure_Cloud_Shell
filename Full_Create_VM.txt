@@ -29,3 +29,5 @@ az vm open-port --port 3389 --resource-group twrg10 --name myVM
 
 #Clean Up
 az group delete --name twrg10 --yes
+
+az logout
