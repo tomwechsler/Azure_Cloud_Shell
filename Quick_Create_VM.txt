@@ -14,3 +14,5 @@ az vm create --resource-group myResourceGroup --name myVM --image win2016datacen
 
 #Clean Up
 az group delete --name myResourceGroup --yes
+
+az logout
