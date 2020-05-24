@@ -1,0 +1,42 @@
+az login
+
+az account show
+
+az account list --all --output table
+
+az account set --subscription "MSDN Platforms"
+
+# Create a resource group.
+az group create --name myResourceGroup --location westeurope
+
+# Create a virtual network 
+az network vnet create --resource-group myResourceGroup --name myVnet --address-prefix 192.168.0.0/16 --subnet-name mySubnet --subnet-prefix 192.168.1.0/24
+
+#Create a network security group	
+az network nsg create --resource-group myResourceGroup --name myNetworkSecurityGroup	
+	
+# Create a NSG Rule	
+az network nsg rule create --resource-group myResourceGroup --nsg-name myNetworkSecurityGroup --name Allow-SSH-Internet --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 22	
+	
+# Create a public IP address 	
+az network public-ip create --name myPublicIp --resource-group myResourceGroup	
+	
+#Create a network interface
+az network nic create --resource-group myResourceGroup --name myNic --vnet-name myVnet --subnet mySubnet --accelerated-networking true --public-ip-address myPublicIp --network-security-group myNetworkSecurityGroup
+
+#Create a VM and attach the NIC
+az vm create --resource-group myResourceGroup --name myVM --image UbuntuLTS --size Standard_DS4_v2 --admin-username "tom" --admin-password "P@ssw0rd1234!!" --nics myNic	
+
+# Public IP
+az vm list-ip-addresses -g myResourceGroup -n myVm --output table	
+
+#Confirm that accelerated networking is enabled	
+ssh azureuser@<your-public-ip-address>
+
+uname -a
+lspci
+	
+#Clean Up
+az group delete --name myResourceGroup --yes
+
+az logout
