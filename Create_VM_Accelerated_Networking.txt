@@ -31,7 +31,7 @@ az vm create --resource-group myResourceGroup --name myVM --image UbuntuLTS --si
 az vm list-ip-addresses -g myResourceGroup -n myVm --output table	
 
 #Confirm that accelerated networking is enabled	
-ssh azureuser@<your-public-ip-address>
+ssh tom@<your-public-ip-address>
 
 uname -a
 lspci
