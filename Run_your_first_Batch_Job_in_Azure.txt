@@ -1,0 +1,50 @@
+az login
+
+az account show
+
+az account list --all --output table
+
+az account set --subscription "MSDN Platforms"
+
+#Create a resource group
+az group create --name myResourceGroup --location westeurope
+
+#Create a storage account
+az storage account create --resource-group myResourceGroup --name mystorageaccount1975 --location westeurope --sku Standard_LRS
+	
+#Create a Batch account
+az batch account create --name mybatchaccount --storage-account mystorageaccount1975 --resource-group myResourceGroup --location westeurope
+
+#You need to authenticate with Batch
+az batch account login --name mybatchaccount1975 --resource-group myResourceGroup --shared-key-auth
+
+#Create a pool of compute nodes
+az batch pool create --id mypool --vm-size Standard_A1_v2 --target-dedicated-nodes 2 --image canonical:ubuntuserver:16.04-LTS --node-agent-sku-id "batch.node.ubuntu 16.04"
+
+#To see the status of the pool
+az batch pool show --pool-id mypool --query "allocationState"
+
+#Create a job
+az batch job create --id myjob --pool-id mypool
+
+#Create tasks
+for i in {1..4}
+do
+   az batch task create --task-id mytask$i --job-id myjob --command-line "/bin/bash -c 'printenv | grep AZ_BATCH; sleep 90s'"
+done
+
+#View task status
+az batch task show --job-id myjob --task-id mytask1
+(take note of the exitCode of the task command line and the nodeId. An exitCode of 0 indicates that the task command line completed successfully.)
+
+#View task output
+az batch task file list --job-id myjob --task-id mytask1 --output table
+
+#To download one of the output files to a local directory
+az batch task file download --job-id myjob --task-id mytask1 --file-path stdout.txt --destination ./stdout.txt
+
+code stdout.txt
+
+#Clean up resources
+az batch pool delete --pool-id mypool
+az group delete --name myResourceGroup
