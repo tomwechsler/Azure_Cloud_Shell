@@ -1,0 +1,31 @@
+az login
+
+az account show
+
+az account list --all --output table
+
+az account set --subscription "MSDN Platforms"
+
+# To overwrite the tags on a resource
+az resource tag --tags 'Dept=IT' 'Environment=Test' -g tw-rg01 -n vnet-base --resource-type "Microsoft.Network/virtualNetworks"
+
+# To append a tag to the existing tags on a resource 
+az resource update --set tags.'Status'='Approved' -g tw-rg01 -n vnet-base --resource-type "Microsoft.Network/virtualNetworks"
+
+# To overwrite the existing tags on a resource group
+az group update -n tw-rg01 --tags 'Environment=Test' 'Dept=IT'
+
+# To append a tag to the existing tags on a resource group
+az group update -n tw-rg01 --set tags.'Status'='Approved'
+
+# To see the existing tags for a resource
+az resource show -n vnet-base -g tw-rg01 --resource-type "Microsoft.Network/virtualNetworks" --query tags
+
+# To see the existing tags for a resource group
+az group show -n tw-rg01 --query tags
+
+# To get all the resources that have a particular tag and value
+az resource list --tag Dept=Finance
+
+# To get resource groups that have a specific tag
+az group list --tag Dept=IT
