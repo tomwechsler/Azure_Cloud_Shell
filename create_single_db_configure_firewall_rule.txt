@@ -1,0 +1,37 @@
+az login
+
+az account show
+
+az account list --all --output table
+
+az account set --subscription "MSDN Platforms"
+
+#Some variables
+location="West Europe"
+randomIdentifier=random123
+
+resource="resource-$randomIdentifier"
+server="server-$randomIdentifier"
+database="database-$randomIdentifier"
+
+login="dbadmin"
+password="samplePassword123!"
+
+startIP=0.0.0.0
+endIP=0.0.0.0
+
+#Create a resource group
+az group create --name $resource --location "$location"
+
+#Creating $server in $location
+az sql server create --name $server --resource-group $resource --location "$location" --admin-user $login --admin-password $password
+
+#Configuring firewall
+az sql server firewall-rule create --resource-group $resource --server $server -n AllowYourIp --start-ip-address $startIP --end-ip-address $endIP
+
+#Creating $database on $server
+az sql db create --resource-group $resource --server $server --name $database --sample-name AdventureWorksLT --edition GeneralPurpose --family Gen4 --capacity 1 --zone-redundant false 
+# zone redundancy is only supported on premium and business critical service tiers
+
+#Clean Up
+az group delete --name $resource
