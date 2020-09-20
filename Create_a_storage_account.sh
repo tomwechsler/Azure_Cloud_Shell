@@ -1,0 +1,29 @@
+az login
+
+az account show
+
+az account list --all --output table
+
+az account set --subscription "MSDN Platforms"
+
+#First, create a new resource group
+az group create --name storage-resource-group --location westeurope
+
+#If you're not sure which region to specify for the --location parameter, you can retrieve a list of supported regions for your subscription
+az account list-locations --query "[].{Region:name}" --out table
+
+#Next, create a general-purpose v2 storage account with read-access geo-redundant storage
+az storage account create --name twstacloud2020 --resource-group storage-resource-group --location westeurope --sku Standard_RAGRS --kind StorageV2
+
+
+Replication option									sku parameter
+
+Locally redundant storage (LRS)						Standard_LRS
+Zone-redundant storage (ZRS)						Standard_ZRS
+Geo-redundant storage (GRS)							Standard_GRS
+Read-access geo-redundant storage (GRS)				Standard_RAGRS
+Geo-zone-redundant storage (GZRS)					Standard_GZRS
+Read-access geo-zone-redundant storage (RA-GZRS)	Standard_RAGZRS
+
+#Clean Up
+az group delete --name storage-resource-group --yes
