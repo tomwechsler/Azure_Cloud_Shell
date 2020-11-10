@@ -23,7 +23,7 @@ $vNet1Id=(az network vnet show --resource-group myResourceGroup --name myVirtual
 # Get the id for myVirtualNetwork2. Use with the Cloud Shell
 vNet2Id=$(az network vnet show --resource-group myResourceGroup --name myVirtualNetwork2 --query id --out tsv)
 # If you use the Azure CLI local the use
-vNet2Id=(az network vnet show --resource-group myResourceGroup --name myVirtualNetwork2 --query id --out tsv)
+$vNet2Id=(az network vnet show --resource-group myResourceGroup --name myVirtualNetwork2 --query id --out tsv)
 
 #Create a peering from myVirtualNetwork1 to myVirtualNetwork2
 az network vnet peering create --name myVirtualNetwork1-myVirtualNetwork2 --resource-group myResourceGroup --vnet-name myVirtualNetwork1 --remote-vnet $vNet2Id --allow-vnet-access
