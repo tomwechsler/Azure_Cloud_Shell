@@ -22,7 +22,7 @@ az network nsg create --resource-group twrg10 --name myNetworkSecurityGroup
 az network nic create --resource-group twrg10 --name myNic --vnet-name myVnet --subnet mySubnet --network-security-group myNetworkSecurityGroup --public-ip-address myPublicIP
 
 # Create a virtual machine. 
-az vm create --resource-group twrg10 --name myVM --location westeurope --nics myNic --image win2016datacenter --admin-username azureuser --admin-password P@ssw0rd1234!!
+az vm create --resource-group twrg10 --name myVM --location westeurope --nics myNic --image win2016datacenter --admin-username azureuser --admin-password "P@ssw0rd1234!!"
 
 # Open port 3389 to allow RDP traffic to host.
 az vm open-port --port 3389 --resource-group twrg10 --name myVM
