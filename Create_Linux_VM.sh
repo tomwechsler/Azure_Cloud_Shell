@@ -60,7 +60,7 @@ az vm create \
     --authentication-type "ssh" \
     --ssh-key-value ~/.ssh/id_rsa.pub 
 
-#The VM may take a few minutes to create...let's bend spacetime.
+#The VM may take a few minutes to create...
 
 az vm create --help | more 
 
