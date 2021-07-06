@@ -38,6 +38,10 @@ az network nsg create \
 
 az network nsg list --output table
 
+az network vnet subnet update \
+	-g "twdemo21-rg" -n "twdemo21-subnet-1" --vnet-name "twdemo21-vnet-1" \
+		--network-security-group "twdemo21-linux-nsg-1"
+
 #Create a virtual network interface and associate with public IP address and NSG
 az network nic create \
   --resource-group "twdemo21-rg" \
@@ -60,7 +64,7 @@ az vm create \
     --authentication-type "ssh" \
     --ssh-key-value ~/.ssh/id_rsa.pub 
 
-#The VM may take a few minutes to create...
+#The VM may take a few minutes to create...let's bend spacetime.
 
 az vm create --help | more 
 
