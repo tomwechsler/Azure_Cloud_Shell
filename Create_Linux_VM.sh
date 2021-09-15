@@ -53,6 +53,9 @@ az network nic create \
 
 az network nic list --output table
 
+#Create an SSH key pair (optional set passphrase for the private key)
+ssh-keygen -m PEM -t rsa -b 4096
+
 #Create a virtual machine
 az vm create \
     --resource-group "twdemo21-rg" \
