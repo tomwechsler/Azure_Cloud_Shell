@@ -1,1 +1,2 @@
-Azure Cloud Shell - Creating Resources in Azure with the Azure CLI!
+# Azure Cloud Shell 
+Creating Resources in Azure with the Azure CLI!
